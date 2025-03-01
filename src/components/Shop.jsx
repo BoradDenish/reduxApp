@@ -2,10 +2,11 @@ import React from 'react'
 
 export default function Shop() {
   return (
-    <div>
-      <button className='btn btn-primary'> + </button>
-      Add this item to cart
-      <button className='btn btn-primary'> - </button>
+    <div className='container'>
+      <h3>Deposit/Withdraw Money</h3>
+      <button className='btn btn-primary mx-2'> - </button>
+      Update Balance
+      <button className='btn btn-primary mx-2'> + </button>
     </div>
   )
 }
