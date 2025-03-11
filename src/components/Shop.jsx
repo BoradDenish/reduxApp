@@ -6,8 +6,12 @@ import { useSelector } from 'react-redux'
 
 import { increment, decrement, incrementByAmount } from '../state/counterSlice';
 import { addTodo, toggleTodo, deleteTodo } from '../state/todoSlice';
+import { login, logout } from "../state/authSlice";
     
 export default function Shop() {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const user = useSelector((state) => state.auth.user);
+
   const [text, setText] = useState('');
   const todos = useSelector((state) => state.todos);
 
@@ -23,6 +27,16 @@ export default function Shop() {
       setText('');
     }
   };
+
+  const handleLogin = () => {
+    const userInfo = { name: "John Doe", email: "john@example.com" };
+    dispatch(login(userInfo));
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
 
   return (
     <>
@@ -63,6 +77,23 @@ export default function Shop() {
           </li>
         ))}
       </ul>
+    </div>
+
+    <div style={{ textAlign: "center", marginTop: "20px" }}>
+      <h2>🔐 Redux Authentication</h2>
+
+      {isAuthenticated ? (
+        <div>
+          <h3>Welcome, {user.name}!</h3>
+          <p>Email: {user.email}</p>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+      ) : (
+        <div>
+          <h3>Please log in</h3>
+          <button onClick={handleLogin}>Login</button>
+        </div>
+      )}
     </div>
     </>
   )
