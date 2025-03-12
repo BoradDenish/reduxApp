@@ -10,13 +10,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from './counterSlice';
 import todoReducer from './todoSlice';
 import authReducer from "./authSlice";
+import cartReducer from "./cartSlice";
 
 export const store = configureStore({
     reducer: {
       counter: counterReducer,
       todos: todoReducer,
-      auth: authReducer
-
+      auth: authReducer,
+      cart: cartReducer
     }
   });
 
