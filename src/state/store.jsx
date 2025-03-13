@@ -11,13 +11,15 @@ import counterReducer from './counterSlice';
 import todoReducer from './todoSlice';
 import authReducer from "./authSlice";
 import cartReducer from "./cartSlice";
+import themeReducer from "./themeSlice";
 
 export const store = configureStore({
     reducer: {
       counter: counterReducer,
       todos: todoReducer,
       auth: authReducer,
-      cart: cartReducer
+      cart: cartReducer,
+      theme: themeReducer
     }
   });
 

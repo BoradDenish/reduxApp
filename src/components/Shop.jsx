@@ -8,8 +8,11 @@ import { increment, decrement, incrementByAmount } from '../state/counterSlice';
 import { addTodo, toggleTodo, deleteTodo } from '../state/todoSlice';
 import { login, logout } from "../state/authSlice";
 import { addToCart, removeFromCart } from "../state/cartSlice";
-    
+import { toggleTheme } from "../state/themeSlice";
+
 export default function Shop() {
+  const darkMode = useSelector((state) => state.theme.darkMode);
+
   const cart = useSelector((state) => state.cart.items);
   const totalAmount = useSelector((state) => state.cart.totalAmount);
 
@@ -133,6 +136,24 @@ export default function Shop() {
 
       <h3>Total Amount: ${totalAmount}</h3>
     </div>
+
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        background: darkMode ? "#222" : "#fff",
+        color: darkMode ? "#fff" : "#000"
+      }}
+    >
+      <h2>🌗 Redux Theme Switcher</h2>
+      <button onClick={() => dispatch(toggleTheme())}>
+        Switch to {darkMode ? "Light" : "Dark"} Mode
+      </button>
+    </div>
+
     </>
   )
 }
