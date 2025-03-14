@@ -9,8 +9,15 @@ import { addTodo, toggleTodo, deleteTodo } from '../state/todoSlice';
 import { login, logout } from "../state/authSlice";
 import { addToCart, removeFromCart } from "../state/cartSlice";
 import { toggleTheme } from "../state/themeSlice";
+import { addContact, editContact, deleteContact } from "../state/contactSlice";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Shop() {
+
+  const contacts = useSelector((state) => state.contacts);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [editId, setEditId] = useState(null);
   const darkMode = useSelector((state) => state.theme.darkMode);
 
   const cart = useSelector((state) => state.cart.items);
@@ -50,6 +57,18 @@ export default function Shop() {
     { id: 3, name: "Headphones", price: 100 }
   ];
 
+  const handleAddContact = () => {
+    if (name && phone) {
+      if (editId) {
+        dispatch(editContact({ id: editId, name, phone }));
+        setEditId(null);
+      } else {
+        dispatch(addContact({ id: uuidv4(), name, phone }));
+      }
+      setName("");
+      setPhone("");
+    }
+  };
 
   return (
     <>
@@ -152,6 +171,41 @@ export default function Shop() {
       <button onClick={() => dispatch(toggleTheme())}>
         Switch to {darkMode ? "Light" : "Dark"} Mode
       </button>
+    </div>
+
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h2>📞 Redux Contact List</h2>
+
+      <input
+        type="text"
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Phone"
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+      />
+      <button onClick={handleAddContact}>
+        {editId ? "Update Contact" : "Add Contact"}
+      </button>
+
+      <h3>Contact List</h3>
+      {contacts.length === 0 ? <p>No contacts added</p> : (
+        contacts.map((contact) => (
+          <div key={contact.id}>
+            <span>{contact.name} - {contact.phone}</span>
+            <button onClick={() => { setEditId(contact.id); setName(contact.name); setPhone(contact.phone); }}>
+              Edit
+            </button>
+            <button onClick={() => dispatch(deleteContact(contact.id))}>
+              Delete
+            </button>
+          </div>
+        ))
+      )}
     </div>
 
     </>
