@@ -12,7 +12,27 @@ import { toggleTheme } from "../state/themeSlice";
 import { addContact, editContact, deleteContact } from "../state/contactSlice";
 import { v4 as uuidv4 } from "uuid";
 
+import { addEvent, editEvent, deleteEvent } from "../state/eventSlice";
+
 export default function Shop() {
+
+  const events = useSelector((state) => state.events);
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [edit1Id, setEdit1Id] = useState(null);
+
+  const handleAddEvent = () => {
+    if (title && date) {
+      if (edit1Id) {
+        dispatch(editEvent({ id: edit1Id, title, date }));
+        setEdit1Id(null);
+      } else {
+        dispatch(addEvent({ id: uuidv4(), title, date }));
+      }
+      setTitle("");
+      setDate("");
+    }
+  };
 
   const contacts = useSelector((state) => state.contacts);
   const [name, setName] = useState("");
@@ -207,7 +227,41 @@ export default function Shop() {
         ))
       )}
     </div>
+    
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h2>📅 Redux Event Management</h2>
 
+      <input
+        type="text"
+        placeholder="Event Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <input
+        type="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+      />
+      <button onClick={handleAddEvent}>
+        {editId ? "Update Event" : "Add Event"}
+      </button>
+
+      <h3>Event List</h3>
+      {events.length === 0 ? <p>No events added</p> : (
+        events.map((event) => (
+          <div key={event.id}>
+            <span>{event.title} - {event.date}</span>
+            <button onClick={() => { setEdit1Id(event.id); setTitle(event.title); setDate(event.date); }}>
+              Edit
+            </button>
+            <button onClick={() => dispatch(deleteEvent(event.id))}>
+              Delete
+            </button>
+          </div>
+        ))
+      )}
+    </div>
+    
     </>
   )
 }

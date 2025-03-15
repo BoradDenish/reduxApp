@@ -13,6 +13,7 @@ import authReducer from "./authSlice";
 import cartReducer from "./cartSlice";
 import themeReducer from "./themeSlice";
 import contactReducer from "./contactSlice";
+import eventReducer from "./eventSlice";
 
 export const store = configureStore({
     reducer: {
@@ -21,7 +22,8 @@ export const store = configureStore({
       auth: authReducer,
       cart: cartReducer,
       theme: themeReducer,
-      contacts: contactReducer
+      contacts: contactReducer,
+      events: eventReducer
     }
   });
 
