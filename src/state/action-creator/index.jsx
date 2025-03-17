@@ -1,3 +1,4 @@
+// increase money
 export const depositMoney = (amount) => {
     return (dispatch) =>{
         dispatch({
@@ -7,6 +8,7 @@ export const depositMoney = (amount) => {
     }
 }
 
+// decrease money
 export const withdrawMoney = (amount) => {
     return (dispatch) =>{
         dispatch({
