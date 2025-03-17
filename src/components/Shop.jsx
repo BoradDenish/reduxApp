@@ -40,12 +40,15 @@ export default function Shop() {
   const [editId, setEditId] = useState(null);
   const darkMode = useSelector((state) => state.theme.darkMode);
 
+  // This for cart
   const cart = useSelector((state) => state.cart.items);
   const totalAmount = useSelector((state) => state.cart.totalAmount);
 
+  // This for auth check
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const user = useSelector((state) => state.auth.user);
 
+  // This for todo crud
   const [text, setText] = useState('');
   const todos = useSelector((state) => state.todos);
 
