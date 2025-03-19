@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// make cart function
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
